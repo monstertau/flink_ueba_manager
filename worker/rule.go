@@ -133,6 +133,11 @@ func (s *RuleJobWorker) createRuleSink() error {
 	schemaBuilder.WithColumn("alert_id", "STRING")
 	schemaBuilder.WithColumn("alert_time", "STRING")
 	schemaBuilder.WithColumn("rule_id", "STRING")
+	schemaBuilder.WithColumn("rule_name", "STRING")
+	schemaBuilder.WithColumn("technique", "STRING")
+	schemaBuilder.WithColumn("severity", "STRING")
+	schemaBuilder.WithColumn("risk_score", "BIGINT")
+	schemaBuilder.WithColumn("object", "STRING")
 
 	connectorBuilder := sql_builder.NewConnectorBuilder()
 	connectorBuilder.
@@ -180,7 +185,8 @@ func (s *RuleJobWorker) createJob() (string, error) {
 	ruleID := getRuleIDFrom(s.cfg.ID)
 	ruleExpBuilder := sql_builder.NewSelectSQLBuilder()
 	bhvExpStr := ruleExpBuilder.
-		WithFields(fmt.Sprintf("*,UUID(),'%v','%v'", time.Now().Format("2006-01-02 15:04:05"), ruleID)).
+		WithFields(fmt.Sprintf("*,UUID(),'%v','%v',"+
+			"'%v','%v','%v',%v,%v as object", time.Now().Format("2006-01-02 15:04:05"), ruleID, s.cfg.Name, s.cfg.Technique, s.cfg.Severity, s.cfg.RiskScore, s.cfg.Object)).
 		WithQueryTable(ruleID).
 		Build()
 	bhvInsertBuilder := sql_builder.NewInsertSQLBuilder()

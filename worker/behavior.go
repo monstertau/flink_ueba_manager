@@ -189,7 +189,7 @@ func (s *BehaviorJobWorker) createBehaviorSink() error {
 	connectorBuilder := sql_builder.NewConnectorBuilder()
 	connectorBuilder.
 		WithOption("connector", "kafka").
-		WithOption("topic", id).
+		WithOption("topic", s.cfg.BehaviorOutput.Topic).
 		WithOption("properties.bootstrap.servers", s.cfg.BehaviorOutput.BootstrapServer).
 		WithOption("properties.group.id", config.AppConfig.KafkaGroupID).
 		WithOption("format", "json")
@@ -226,7 +226,7 @@ func (s *BehaviorJobWorker) createProfilingSink() error {
 	connectorBuilder := sql_builder.NewConnectorBuilder()
 	connectorBuilder.
 		WithOption("connector", "kafka").
-		WithOption("topic", id).
+		WithOption("topic", s.cfg.ProfileOutput.Topic).
 		WithOption("properties.bootstrap.servers", s.cfg.ProfileOutput.BootstrapServer).
 		WithOption("properties.group.id", config.AppConfig.KafkaGroupID).
 		WithOption("format", "json")

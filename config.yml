@@ -2,7 +2,7 @@ service:
   port: 9999
   host: localhost
 endpoint:
-  behavior_get_job: http://localhost:9090/api/v1/jobs/behavior
-  rule_get_job: http://localhost:9090/api/v1/jobs/rule
+  behavior_get_job: http://localhost:9090/api/v1/jobs/worker/behavior
+  rule_get_job: http://localhost:9090/api/v1/jobs/worker/rule
 flink_sql_gateway:
   url: http://localhost:8083
